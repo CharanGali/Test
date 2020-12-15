@@ -34,7 +34,7 @@ jobs:
         enable-AzPSSession: true
     - name: Set Resource Group name
       run: |
-          rgname=${{ github.event.inputs.name }}Auto$(echo ${{ GITHUB_REF }} | sed 's/[^a-z]//g')
+          rgname=${{ github.event.inputs.name }}Auto$(echo ${ GITHUB_REF } | sed 's/[^a-z]//g')
           env.PREFIX=${rgname}
           echo env.PREFIX
     - name: Create Resource Group
