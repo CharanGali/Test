@@ -45,6 +45,7 @@ jobs:
     - name: Set Parameters
       uses: azure/CLI@v1
       with:
+        azcliversion: 2.9.1
         inlineScript: |
            deploymentName="ingress-appgw"
            cd azure
