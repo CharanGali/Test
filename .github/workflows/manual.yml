@@ -47,5 +47,4 @@ jobs:
       with:
         inlineScript: |
            deploymentName="ingress-appgw"
-           cp *.json .
            az group deployment create -g $PREFIX -n $deploymentName --template-file AzARMAKSAppGateway.json --parameters parameters.json
