@@ -35,11 +35,10 @@ jobs:
     - name: Set Resource Group name
       run: |
           rgname=${{ github.event.inputs.name }}Auto$(echo ${ GITHUB_REF } | sed 's/[^a-z]//g')
-          env.PREFIX=${rgname}
-          echo env.PREFIX
+          echo PREFIX=${rgname} >> env.PREFIX
     - name: Create Resource Group
       uses: azure/CLI@v1
       with:
           inlineScript: |
-            az group create --name ${env.PREFIX} --location japaneast
+            az group create --name ${PREFIX} --location japaneast
       
