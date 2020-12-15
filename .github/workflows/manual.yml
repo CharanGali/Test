@@ -45,7 +45,7 @@ jobs:
       uses: azure/CLI@v1
       with:
           inlineScript: |
-            az group create --name ${PREFIX} --location japaneast 
+            az group create --name ${PREFIX} --location japaneast --tags app=ssbasela env=dev || true
     
     - name: Set Parameters
       uses: azure/CLI@v1
@@ -53,6 +53,5 @@ jobs:
         azcliversion: 2.9.1
         inlineScript: |
            cd azure
-           cp *.json .
            deploymentName="ingress-appgw"
            az deployment group create -g $PREFIX -n $deploymentName --template-file LAAzARMAKSAppGateway.json --parameters parameters.json
