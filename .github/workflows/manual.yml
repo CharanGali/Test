@@ -23,7 +23,7 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     env:
-      PREFIX: ""
+      PREFIX: "Dev"
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     - name: Azure Login
@@ -34,14 +34,8 @@ jobs:
         enable-AzPSSession: true
     - name: Set Resource Group name
       run: |
-          # Use the name of the branch as the name of the resource. Since there are some resources that cannot use hyphens etc.
-          if [ ${{ github.event.inputs.name }} = DEV ]; then
-            rgname=DevAuto$(echo ${ GITHUB_REF } | sed 's/[^a-z]//g')
+          rgname=${{ github.event.inputs.name }}Auto$(echo ${ GITHUB_REF } | sed 's/[^a-z]//g')
           echo PREFIX=${rgname}
-          #else
-          #  if [ ${{ github.event.inputs.name }} = QAS ]; then
-          #    rgname=QasAuto$(echo ${ GITHUB_REF } | sed 's/[^a-z]//g')
-          #    echo PREFIX=${rgname}
     - name: Create Resource Group
       uses: azure/CLI@v1
       with:
