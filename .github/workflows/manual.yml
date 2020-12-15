@@ -26,22 +26,27 @@ jobs:
       PREFIX: "Dev"
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+    - name: Checkout source code
+      uses: actions/checkout@master
+      
     - name: Azure Login
       uses: Azure/login@v1.1
       with:
         # Paste output of `az ad sp create-for-rbac` as value of secret variable: AZURE_CREDENTIALS
         creds: ${{ secrets.AZURE_CREDENTIALS }}
         enable-AzPSSession: true
+      
     - name: Set Resource Group name
       run: |
           rgname=${{ github.event.inputs.name }}Auto$(echo ${ GITHUB_SHA } | sed 's/[^a-z]//g')
           echo "PREFIX=${rgname}" >> $PREFIX
+    
     - name: Create Resource Group
       uses: azure/CLI@v1
       with:
           inlineScript: |
-            az group create --name ${PREFIX} --location japaneast
-      
+            az group create --name
+    
     - name: Set Parameters
       uses: azure/CLI@v1
       with:
