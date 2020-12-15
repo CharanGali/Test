@@ -52,6 +52,18 @@ jobs:
       with:
         azcliversion: 2.9.1
         inlineScript: |
-           cd azure
-           deploymentName="ingress-appgw"
-           az deployment group create -g $PREFIX -n $deploymentName --template-file LAAzARMAKSAppGateway.json --parameters parameters.json
+          cd azure
+          az ad sp create-for-rbac --skip-assignment -o json > auth.json
+          appId=$(jq -r ".appId" auth.json)
+          password=$(jq -r ".password" auth.json)
+          objectId=$(az ad sp show --id $appId --query "objectId" -o tsv)
+          cat <<EOF > parameters1.json
+          {
+            "aksServicePrincipalAppId": { "value": "$appId" },
+            "aksServicePrincipalClientSecret": { "value": "$password" },
+            "aksServicePrincipalObjectId": { "value": "$objectId" },
+            "aksEnableRBAC": { "value": false }
+          }
+          EOF
+          deploymentName="ingress-appgw"
+          az deployment group create -g $PREFIX -n $deploymentName --template-file LAAzARMAKSAppGateway.json --parameters1 parameters.json
