@@ -34,8 +34,8 @@ jobs:
         enable-AzPSSession: true
     - name: Set Resource Group name
       run: |
-          rgname=${{ github.event.inputs.name }}Auto$(echo ${ GITHUB_REF } | sed 's/[^a-z]//g')
-          echo "PREFIX=${rgname}" >> $env.PREFIX
+          rgname=${{ github.event.inputs.name }}Auto$(echo ${ GITHUB_SHA } | sed 's/[^a-z]//g')
+          echo "PREFIX=${rgname}" >> $PREFIX
     - name: Create Resource Group
       uses: azure/CLI@v1
       with:
