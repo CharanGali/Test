@@ -36,8 +36,10 @@ jobs:
           # Use the name of the branch as the name of the resource. Since there are some resources that cannot use hyphens etc.
           if [ ${{ github.event.inputs.name }} = DEV ]; then
             rgname=DevAuto$(echo ${GITHUB_REF##*/} | sed 's/[^a-z]//g')
+          be
           if [ ${{ github.event.inputs.name }} = QAS ]; then
             rgname=QasAuto$(echo ${GITHUB_REF##*/} | sed 's/[^a-z]//g')
+          be
           # If you write to # $ GITHUB_ENV, the variable will be inherited to other steps.
           echo "PREFIX=${rgname}" >> $GITHUB_ENV
     - name: Create Resource Group
