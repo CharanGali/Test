@@ -42,7 +42,6 @@ jobs:
             if [ ${{ github.event.inputs.name }} = QAS ]; then
               rgname=QasAuto$(echo ${ GITHUB_REF } | sed 's/[^a-z]//g')
               echo PREFIX=${rgname}
-          be
     - name: Create Resource Group
       uses: azure/CLI@v1
       with:
