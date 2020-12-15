@@ -36,12 +36,13 @@ jobs:
       run: |
           # Use the name of the branch as the name of the resource. Since there are some resources that cannot use hyphens etc.
           if [ ${{ github.event.inputs.name }} = DEV ]; then
-            rgname=DevAuto$(echo ${ GITHUB_REF##*/ } | sed 's/[^a-z]//g')
+            rgname=DevAuto$(echo ${ GITHUB_REF } | sed 's/[^a-z]//g')
+            echo PREFIX=${rgname}
+          else
+            if [ ${{ github.event.inputs.name }} = QAS ]; then
+              rgname=QasAuto$(echo ${ GITHUB_REF } | sed 's/[^a-z]//g')
+              echo PREFIX=${rgname}
           be
-          if [ ${{ github.event.inputs.name }} = QAS ]; then
-            rgname=QasAuto$(echo ${ GITHUB_REF##*/ } | sed 's/[^a-z]//g')
-          be
-          echo PREFIX=$rgname
     - name: Create Resource Group
       uses: azure/CLI@v1
       with:
